@@ -1,0 +1,30 @@
+# Auto detect text files and normalise line endings
+* text=auto
+
+# Source
+*.php text eol=lf
+*.blade.php text eol=lf
+
+# Configs
+*.json text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.neon text eol=lf
+
+# Docs
+*.md text eol=lf
+
+# Exclude from dist
+/.github            export-ignore
+/tests              export-ignore
+/.editorconfig      export-ignore
+/.gitattributes     export-ignore
+/.gitignore         export-ignore
+/phpunit.xml        export-ignore
+/phpstan.neon       export-ignore
+/pint.json          export-ignore
+/CLAUDE.md          export-ignore
+/.claude            export-ignore
+/docs               export-ignore
+/MVP_CHECKLIST.md   export-ignore

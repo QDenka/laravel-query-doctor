@@ -1,0 +1,25 @@
+/vendor/
+/node_modules/
+/.idea/
+/.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Testing
+/coverage/
+.phpunit.result.cache
+.phpunit.cache/
+
+# Build artifacts
+/build/
+*.phar
+
+# Environment
+.env
+.env.local
+
+# Storage (runtime)
+/storage/query-doctor.sqlite
