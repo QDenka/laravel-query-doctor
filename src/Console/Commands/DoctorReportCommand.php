@@ -34,7 +34,7 @@ final class DoctorReportCommand extends Command
         $issues = $reportService->analyzeStored($filters);
 
         if ($issues === []) {
-            $this->info('No query data found. Run your application or test suite first.');
+            $this->info('No issues found for the given filters.');
 
             return self::SUCCESS;
         }

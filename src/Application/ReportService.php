@@ -26,6 +26,7 @@ final class ReportService
 
     /**
      * Run analysis on stored events and generate a report.
+     * Falls back to already-stored issues if no events are available.
      *
      * @param  array<string, mixed>  $filters
      * @return Issue[]
@@ -34,26 +35,27 @@ final class ReportService
     {
         $events = $this->storage->getEvents($filters);
 
-        if ($events === []) {
-            return [];
-        }
-
-        // Group events by context and analyze each context
-        /** @var array<string, \QDenka\QueryDoctor\Domain\QueryEvent[]> $byContext */
-        $byContext = [];
-        foreach ($events as $event) {
-            $byContext[$event->contextId][] = $event;
-        }
-
-        $allIssues = [];
-        foreach ($byContext as $contextEvents) {
-            $issues = $this->pipeline->analyze($contextEvents);
-            foreach ($issues as $issue) {
-                $allIssues[$issue->id] = $issue;
+        if ($events !== []) {
+            // Group events by context and analyze each context
+            /** @var array<string, \QDenka\QueryDoctor\Domain\QueryEvent[]> $byContext */
+            $byContext = [];
+            foreach ($events as $event) {
+                $byContext[$event->contextId][] = $event;
             }
+
+            $allIssues = [];
+            foreach ($byContext as $contextEvents) {
+                $issues = $this->pipeline->analyze($contextEvents);
+                foreach ($issues as $issue) {
+                    $allIssues[$issue->id] = $issue;
+                }
+            }
+
+            return array_values($allIssues);
         }
 
-        return array_values($allIssues);
+        // No events — return already-stored issues (from previous analysis runs)
+        return $this->storage->getIssues($filters);
     }
 
     /**
