@@ -40,12 +40,15 @@ final class QueryDoctorServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        $this->registerPublishing();
+
         if (! $this->isEnabled()) {
             return;
         }
 
-        $this->registerPublishing();
         $this->registerCommands();
+        $this->registerRoutes();
+        $this->registerViews();
         $this->hookDbListener();
     }
 
@@ -181,6 +184,22 @@ final class QueryDoctorServiceProvider extends ServiceProvider
             });
         } catch (\Throwable $e) {
             Log::warning('Query Doctor: Failed to hook DB listener — '.$e->getMessage());
+        }
+    }
+
+    private function registerRoutes(): void
+    {
+        $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
+    }
+
+    private function registerViews(): void
+    {
+        $this->loadViewsFrom(__DIR__.'/../../resources/views', 'query-doctor');
+
+        if ($this->app->runningInConsole()) {
+            $this->publishes([
+                __DIR__.'/../../resources/views' => resource_path('views/vendor/query-doctor'),
+            ], 'query-doctor-views');
         }
     }
 
