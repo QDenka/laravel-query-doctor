@@ -17,6 +17,7 @@ abstract class TestCase extends BaseTestCase
     protected function getEnvironmentSetUp($app): void
     {
         $app['config']->set('app.env', 'testing');
+        $app['config']->set('app.key', 'base64:'.base64_encode(random_bytes(32)));
         $app['config']->set('query-doctor.enabled', true);
         $app['config']->set('query-doctor.allowed_environments', ['testing']);
         $app['config']->set('query-doctor.storage.path', ':memory:');
