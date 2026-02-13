@@ -20,6 +20,7 @@ use QDenka\QueryDoctor\Domain\Analyzer\MissingIndexAnalyzer;
 use QDenka\QueryDoctor\Domain\Analyzer\NPlusOneAnalyzer;
 use QDenka\QueryDoctor\Domain\Analyzer\SelectStarAnalyzer;
 use QDenka\QueryDoctor\Domain\Analyzer\SlowQueryAnalyzer;
+use QDenka\QueryDoctor\Domain\BindingMasker;
 use QDenka\QueryDoctor\Domain\Contracts\StorageInterface;
 use QDenka\QueryDoctor\Infrastructure\Capture\LaravelDbListenerAdapter;
 use QDenka\QueryDoctor\Infrastructure\Reporting\JsonReporter;
@@ -152,6 +153,22 @@ final class QueryDoctorServiceProvider extends ServiceProvider
 
         $this->app->singleton(BaselineService::class);
 
+        $this->app->singleton(BindingMasker::class, function () {
+            /** @var bool $enabled */
+            $enabled = config('query-doctor.masking.enabled', true);
+
+            if (! $enabled) {
+                return null;
+            }
+
+            /** @var string[] $columns */
+            $columns = config('query-doctor.masking.columns', []);
+            /** @var string[] $patterns */
+            $patterns = config('query-doctor.masking.value_patterns', []);
+
+            return new BindingMasker($columns, $patterns);
+        });
+
         $this->app->singleton(LaravelDbListenerAdapter::class, function () {
             /** @var int $stackDepth */
             $stackDepth = config('query-doctor.stack_trace.depth', 10);
@@ -160,7 +177,10 @@ final class QueryDoctorServiceProvider extends ServiceProvider
             /** @var string[] $ignoreSqlPatterns */
             $ignoreSqlPatterns = config('query-doctor.ignore.sql_patterns', []);
 
-            return new LaravelDbListenerAdapter($stackDepth, $excludePaths, $ignoreSqlPatterns);
+            /** @var BindingMasker|null $masker */
+            $masker = $this->app->make(BindingMasker::class);
+
+            return new LaravelDbListenerAdapter($stackDepth, $excludePaths, $ignoreSqlPatterns, $masker);
         });
     }
 
