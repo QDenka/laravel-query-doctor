@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace QDenka\QueryDoctor\Infrastructure\Capture;
 
 use Illuminate\Database\Events\QueryExecuted;
+use QDenka\QueryDoctor\Domain\BindingMasker;
 use QDenka\QueryDoctor\Domain\Contracts\EventSourceInterface;
 use QDenka\QueryDoctor\Domain\Enums\CaptureContext;
 use QDenka\QueryDoctor\Domain\QueryEvent;
@@ -28,6 +29,7 @@ final class LaravelDbListenerAdapter implements EventSourceInterface
         private readonly array $excludePaths = ['vendor/'],
         /** @var string[] */
         private readonly array $ignoreSqlPatterns = [],
+        private readonly ?BindingMasker $masker = null,
     ) {}
 
     public function listen(callable $callback): void
@@ -66,9 +68,16 @@ final class LaravelDbListenerAdapter implements EventSourceInterface
         }
 
         try {
+            $bindings = $queryExecuted->bindings;
+
+            // Apply PII masking before creating the event
+            if ($this->masker !== null) {
+                $bindings = $this->masker->mask($queryExecuted->sql, $bindings);
+            }
+
             $event = new QueryEvent(
                 sql: $queryExecuted->sql,
-                bindings: $queryExecuted->bindings,
+                bindings: $bindings,
                 timeMs: $queryExecuted->time,
                 connection: $queryExecuted->connectionName,
                 contextId: $this->contextId ?: 'unknown',
