@@ -1,0 +1,20 @@
+[
+    {
+        "type": "n_plus_one",
+        "severity": "low",
+        "confidence": 0.8,
+        "title": "N+1 query (10x): select * from posts where user_id = ?",
+        "fingerprint": "select * from posts where user_id = ?",
+        "queryCount": 10,
+        "totalTimeMs": 29.2
+    },
+    {
+        "type": "select_star",
+        "severity": "low",
+        "confidence": 0.7,
+        "title": "SELECT * (10x): select * from posts where user_id = ?",
+        "fingerprint": "select * from posts where user_id = ?",
+        "queryCount": 10,
+        "totalTimeMs": 29.2
+    }
+]

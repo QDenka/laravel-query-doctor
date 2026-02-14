@@ -1,0 +1,11 @@
+[
+    {
+        "type": "slow",
+        "severity": "medium",
+        "confidence": 1,
+        "title": "Slow query: 850ms \u2014 select orders.*, customers.name, customers.email from orders inner join custo...",
+        "fingerprint": "select orders.*, customers.name, customers.email from orders inner join customers on orders.customer_id = customers.id where orders.created_at between ? and ? group by orders.status order by orders.total desc",
+        "queryCount": 1,
+        "totalTimeMs": 850
+    }
+]

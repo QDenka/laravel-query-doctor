@@ -1,0 +1,47 @@
+[
+    {
+        "type": "duplicate",
+        "severity": "low",
+        "confidence": 1,
+        "title": "Duplicate query (4x): select * from settings where key = 'site.title'",
+        "fingerprint": "select * from settings where key = ?",
+        "queryCount": 4,
+        "totalTimeMs": 4
+    },
+    {
+        "type": "n_plus_one",
+        "severity": "low",
+        "confidence": 0.72,
+        "title": "N+1 query (6x): select * from comments where post_id = ?",
+        "fingerprint": "select * from comments where post_id = ?",
+        "queryCount": 6,
+        "totalTimeMs": 23.2
+    },
+    {
+        "type": "select_star",
+        "severity": "low",
+        "confidence": 0.6,
+        "title": "SELECT * (4x): select * from settings where key = 'site.title'",
+        "fingerprint": "select * from settings where key = ?",
+        "queryCount": 4,
+        "totalTimeMs": 4
+    },
+    {
+        "type": "select_star",
+        "severity": "low",
+        "confidence": 0.7,
+        "title": "SELECT * (6x): select * from comments where post_id = ?",
+        "fingerprint": "select * from comments where post_id = ?",
+        "queryCount": 6,
+        "totalTimeMs": 23.2
+    },
+    {
+        "type": "slow",
+        "severity": "low",
+        "confidence": 1,
+        "title": "Slow query: 250ms \u2014 select * from users",
+        "fingerprint": "select * from users",
+        "queryCount": 1,
+        "totalTimeMs": 250
+    }
+]

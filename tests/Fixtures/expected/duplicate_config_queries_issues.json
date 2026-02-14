@@ -1,0 +1,20 @@
+[
+    {
+        "type": "duplicate",
+        "severity": "low",
+        "confidence": 1,
+        "title": "Duplicate query (5x): select * from settings where key = 'app.name'",
+        "fingerprint": "select * from settings where key = ?",
+        "queryCount": 5,
+        "totalTimeMs": 5.8
+    },
+    {
+        "type": "select_star",
+        "severity": "low",
+        "confidence": 0.65,
+        "title": "SELECT * (5x): select * from settings where key = 'app.name'",
+        "fingerprint": "select * from settings where key = ?",
+        "queryCount": 5,
+        "totalTimeMs": 5.8
+    }
+]

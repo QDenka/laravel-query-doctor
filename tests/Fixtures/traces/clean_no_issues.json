@@ -1,0 +1,26 @@
+[
+    {
+        "sql": "select * from users where id = ?",
+        "bindings": [1],
+        "timeMs": 2.0,
+        "connection": "mysql",
+        "contextId": "req-004",
+        "context": "http",
+        "route": "GET /users/1",
+        "controller": "UserController@show",
+        "stackExcerpt": [],
+        "timestamp": "2026-01-15T10:03:00+00:00"
+    },
+    {
+        "sql": "select * from posts where user_id = ? limit ?",
+        "bindings": [1, 10],
+        "timeMs": 3.5,
+        "connection": "mysql",
+        "contextId": "req-004",
+        "context": "http",
+        "route": "GET /users/1",
+        "controller": "UserController@show",
+        "stackExcerpt": [],
+        "timestamp": "2026-01-15T10:03:00+00:00"
+    }
+]

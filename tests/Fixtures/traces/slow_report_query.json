@@ -1,0 +1,26 @@
+[
+    {
+        "sql": "select orders.*, customers.name, customers.email from orders inner join customers on orders.customer_id = customers.id where orders.created_at between ? and ? group by orders.status order by orders.total desc",
+        "bindings": ["2025-01-01", "2025-12-31"],
+        "timeMs": 850.0,
+        "connection": "mysql",
+        "contextId": "req-003",
+        "context": "http",
+        "route": "GET /reports/annual",
+        "controller": "ReportController@annual",
+        "stackExcerpt": [],
+        "timestamp": "2026-01-15T10:02:00+00:00"
+    },
+    {
+        "sql": "select count(*) from orders where status = ?",
+        "bindings": ["completed"],
+        "timeMs": 5.0,
+        "connection": "mysql",
+        "contextId": "req-003",
+        "context": "http",
+        "route": "GET /reports/annual",
+        "controller": "ReportController@annual",
+        "stackExcerpt": [],
+        "timestamp": "2026-01-15T10:02:00+00:00"
+    }
+]
