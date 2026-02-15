@@ -2,102 +2,77 @@
 
 Development plan broken into sprints and a backlog for future versions.
 
-## Sprint 1 — Capture + Basic Analysis
+## Sprint 1 — Capture + Basic Analysis (DONE)
 
 **Goal**: Capture queries, fingerprint them, detect slow and duplicate queries, show results in CLI.
 
 ### Tasks
 
-- [ ] Domain: `QueryEvent`, `QueryFingerprint`, `Issue`, `Recommendation` value objects
-- [ ] Domain: `Severity`, `IssueType`, `CaptureContext` enums
-- [ ] Domain: `AnalyzerInterface` contract
-- [ ] Domain: `SlowQueryAnalyzer` implementation
-- [ ] Domain: `DuplicateQueryAnalyzer` implementation
-- [ ] Application: `QueryCaptureService`
-- [ ] Application: `AnalysisPipeline` (runs analyzers sequentially)
-- [ ] Infrastructure: `LaravelDbListenerAdapter` (hooks into `DB::listen()`)
-- [ ] Infrastructure: `SqliteStore` (basic CRUD, schema creation, WAL mode)
-- [ ] Infrastructure: `InMemoryStore` (fallback)
-- [ ] Console: `DoctorReportCommand` (table + JSON output)
-- [ ] Provider: `QueryDoctorServiceProvider` (basic registration)
-- [ ] Config: `query-doctor.php` with defaults
-- [ ] Tests: Unit tests for fingerprinting, analyzers
-- [ ] Tests: Integration test for DB listener capture
-
-### Definition of Done
-
-- `composer require` works with auto-discovery.
-- `php artisan doctor:report` shows detected issues from captured queries.
-- SQLite storage works with WAL mode.
-- Fallback to InMemoryStore when SQLite is unavailable.
-- Unit tests pass.
+- [x] Domain: `QueryEvent`, `QueryFingerprint`, `Issue`, `Recommendation` value objects
+- [x] Domain: `Severity`, `IssueType`, `CaptureContext` enums
+- [x] Domain: `AnalyzerInterface` contract
+- [x] Domain: `SlowQueryAnalyzer` implementation
+- [x] Domain: `DuplicateQueryAnalyzer` implementation
+- [x] Application: `QueryCaptureService`
+- [x] Application: `AnalysisPipeline` (runs analyzers sequentially)
+- [x] Infrastructure: `LaravelDbListenerAdapter` (hooks into `DB::listen()`)
+- [x] Infrastructure: `SqliteStore` (basic CRUD, schema creation, WAL mode)
+- [x] Infrastructure: `InMemoryStore` (fallback)
+- [x] Console: `DoctorReportCommand` (table + JSON output)
+- [x] Provider: `QueryDoctorServiceProvider` (basic registration)
+- [x] Config: `query-doctor.php` with defaults
+- [x] Tests: Unit tests for fingerprinting, analyzers
+- [x] Tests: Integration test for DB listener capture
 
 ---
 
-## Sprint 2 — N+1 + Missing Index + Dashboard
+## Sprint 2 — N+1 + Missing Index + Dashboard (DONE)
 
 **Goal**: Add the two most valuable analyzers and a web UI.
 
 ### Tasks
 
-- [ ] Domain: `NPlusOneAnalyzer` implementation
-- [ ] Domain: `MissingIndexAnalyzer` implementation
-- [ ] Domain: `SelectStarAnalyzer` implementation
-- [ ] Infrastructure: `MysqlExplainAdapter`
-- [ ] Infrastructure: `PostgresExplainAdapter`
-- [ ] HTTP: `DoctorDashboardController` (index + API endpoints)
-- [ ] HTTP: `QueryDoctorMiddleware` (access gate + context tracking)
-- [ ] HTTP: Routes registration
-- [ ] Views: Dashboard layout (Blade + Alpine.js + Tailwind CDN)
-- [ ] Views: Issue cards, filters, stats bar
-- [ ] API: Issues endpoint with pagination and filtering
-- [ ] API: Queries endpoint
-- [ ] Tests: Unit tests for N+1, missing index, select * analyzers
-- [ ] Tests: Feature tests for dashboard routes
-- [ ] Tests: Integration tests for EXPLAIN adapters
-
-### Definition of Done
-
-- Dashboard at `/query-doctor` shows issues grouped by severity.
-- Filters work (period, severity, type, route).
-- N+1 detection works with configurable thresholds.
-- EXPLAIN integration works for MySQL (Postgres as stretch goal).
-- Feature tests pass.
+- [x] Domain: `NPlusOneAnalyzer` implementation
+- [x] Domain: `MissingIndexAnalyzer` implementation
+- [x] Domain: `SelectStarAnalyzer` implementation
+- [x] Infrastructure: `MysqlExplainAdapter`
+- [x] Infrastructure: `PostgresExplainAdapter`
+- [x] HTTP: `DoctorDashboardController` (index + API endpoints)
+- [x] HTTP: `QueryDoctorMiddleware` (access gate + context tracking)
+- [x] HTTP: Routes registration
+- [x] Views: Dashboard layout (Blade + Alpine.js + Tailwind CDN)
+- [x] Views: Issue cards, filters, stats bar
+- [x] API: Issues endpoint with pagination and filtering
+- [x] API: Queries endpoint
+- [x] Tests: Unit tests for N+1, missing index, select * analyzers
+- [x] Tests: Feature tests for dashboard routes
+- [x] Tests: Integration tests for EXPLAIN adapters
 
 ---
 
-## Sprint 3 — Baseline + CI + Polish
+## Sprint 3 — Baseline + CI + Polish (DONE)
 
 **Goal**: Make it CI-ready and production-quality.
 
 ### Tasks
 
-- [ ] Application: `BaselineService`
-- [ ] Console: `DoctorBaselineCommand`
-- [ ] Console: `DoctorCiReportCommand` (markdown output, exit codes)
-- [ ] Infrastructure: `MarkdownReporter`
-- [ ] Dashboard: Baseline create button
-- [ ] Dashboard: Ignore issue button
-- [ ] API: Baseline + ignore endpoints
-- [ ] Config: CI fail policy options
-- [ ] Security: PII masking for bindings
-- [ ] Storage: Retention cleanup
-- [ ] Docs: README with quickstart
-- [ ] Docs: CONTRIBUTING.md
-- [ ] Docs: CHANGELOG.md
-- [ ] CI: GitHub Actions workflow (PHP 8.2/8.3/8.4 x Laravel 10/11/12)
-- [ ] Tests: Feature tests for baseline flow
-- [ ] Tests: Feature tests for CI command exit codes
-- [ ] Tests: Golden tests with fixtures
-
-### Definition of Done
-
-- `doctor:ci-report --fail-on=high` exits 1 when high-severity issues exist.
-- Baseline excludes known issues from CI reports.
-- PII masking strips sensitive bindings.
-- All tests green. Larastan level 8 clean. Pint clean.
-- README has a working quickstart.
-- Package is publishable to Packagist.
+- [x] Application: `BaselineService`
+- [x] Console: `DoctorBaselineCommand`
+- [x] Console: `DoctorCiReportCommand` (markdown output, exit codes)
+- [x] Infrastructure: `MarkdownReporter`
+- [x] Dashboard: Baseline create button
+- [x] Dashboard: Ignore issue button
+- [x] API: Baseline + ignore endpoints
+- [x] Config: CI fail policy options
+- [x] Security: PII masking for bindings
+- [x] Storage: Retention cleanup
+- [x] Docs: README with quickstart
+- [x] Docs: CONTRIBUTING.md
+- [x] Docs: CHANGELOG.md
+- [x] CI: GitHub Actions workflow (PHP 8.2/8.3/8.4 x Laravel 10/11/12)
+- [x] Tests: Feature tests for baseline flow
+- [x] Tests: Feature tests for CI command exit codes
+- [x] Tests: Golden tests with fixtures
 
 ---
 

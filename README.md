@@ -44,8 +44,10 @@ php artisan doctor:report
 | `php artisan doctor:report` | Show detected issues |
 | `php artisan doctor:report --format=json` | Output as JSON |
 | `php artisan doctor:report --format=md --output=report.md` | Save markdown report to file |
-| `php artisan doctor:baseline create` | Snapshot current issues as baseline |
-| `php artisan doctor:ci-report --fail-on=high` | CI mode: exit 1 if high-severity issues exist |
+| `php artisan doctor:baseline` | Snapshot current issues as baseline |
+| `php artisan doctor:baseline --clear` | Remove the baseline |
+| `php artisan doctor:ci-report --fail-on=high` | CI mode: exit 1 if high+ severity issues exist |
+| `php artisan doctor:ci-report --baseline` | CI mode: exclude baselined issues |
 
 ### CI Integration
 
@@ -100,6 +102,23 @@ It shows:
 - Slow queries with timing details
 - N+1 candidates with query counts
 - Filters by period, route, severity, and type
+
+## Security
+
+Query bindings are sanitized before storage:
+
+- **Column-based masking**: Bindings for columns like `password`, `token`, `api_key` are replaced with `[MASKED]`.
+- **Pattern-based masking**: Strings matching email, phone, or SSN patterns are masked regardless of column.
+- **Hash-only storage**: Bindings are stored as SHA-256 hashes for duplicate detection, not raw values.
+
+You can add your own columns and patterns in the config:
+
+```php
+'masking' => [
+    'columns' => ['password', 'secret', 'token', 'date_of_birth'],
+    'value_patterns' => ['/^[A-Z]{2}\d{6}$/'],  // passport numbers
+],
+```
 
 ## How It Works
 
