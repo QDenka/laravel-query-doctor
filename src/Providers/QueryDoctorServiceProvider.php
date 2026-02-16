@@ -197,13 +197,40 @@ final class QueryDoctorServiceProvider extends ServiceProvider
 
             $this->app->terminating(function () use ($capture): void {
                 try {
+                    $events = $capture->bufferedEvents();
                     $capture->flush();
+                    $this->analyzeAndStoreIssues($events);
                 } catch (\Throwable $e) {
                     Log::warning('Query Doctor: Flush failed — '.$e->getMessage());
                 }
             });
         } catch (\Throwable $e) {
             Log::warning('Query Doctor: Failed to hook DB listener — '.$e->getMessage());
+        }
+    }
+
+    /**
+     * Run analyzers on captured events and persist detected issues.
+     *
+     * @param  \QDenka\QueryDoctor\Domain\QueryEvent[]  $events
+     */
+    private function analyzeAndStoreIssues(array $events): void
+    {
+        if ($events === []) {
+            return;
+        }
+
+        try {
+            $pipeline = $this->app->make(AnalysisPipeline::class);
+            $storage = $this->app->make(StorageInterface::class);
+
+            $issues = $pipeline->analyze($events);
+
+            foreach ($issues as $issue) {
+                $storage->storeIssue($issue);
+            }
+        } catch (\Throwable $e) {
+            Log::warning('Query Doctor: Analysis failed — '.$e->getMessage());
         }
     }
 
