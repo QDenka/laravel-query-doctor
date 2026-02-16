@@ -1,13 +1,13 @@
 {
     "name": "qdenka/laravel-query-doctor",
     "description": "Detect N+1 queries, missing indexes, and slow queries in your Laravel app before they reach production.",
-    "keywords": ["laravel", "query", "performance", "n+1", "sql", "diagnostics", "profiling"],
+    "keywords": ["laravel", "query", "performance", "n-plus-one", "sql", "diagnostics", "profiling"],
     "license": "MIT",
     "type": "library",
     "authors": [
         {
             "name": "QDenka",
-            "email": "dev@qdenka.com"
+            "email": "a@bigf.at"
         }
     ],
     "require": {
