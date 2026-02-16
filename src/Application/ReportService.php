@@ -51,6 +51,11 @@ final class ReportService
                 }
             }
 
+            // Persist issues so the dashboard can display them
+            foreach ($allIssues as $issue) {
+                $this->storage->storeIssue($issue);
+            }
+
             return array_values($allIssues);
         }
 
