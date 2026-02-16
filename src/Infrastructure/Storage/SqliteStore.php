@@ -122,7 +122,7 @@ final class SqliteStore implements StorageInterface
         }
 
         if (isset($filters['period'])) {
-            $where[] = "created_at >= datetime('now', :period)";
+            $where[] = "e.created_at >= datetime('now', :period)";
             $params['period'] = '-'.$this->periodToSqliteInterval($filters['period']);
         }
 
