@@ -17,7 +17,7 @@ namespace QDenka\QueryDoctor\Domain;
  */
 final class BindingMasker
 {
-    public const string MASKED = '[MASKED]';
+    public const MASKED = '[MASKED]';
 
     /** @var array<int, string> Lowercase column names to mask */
     private readonly array $sensitiveColumns;

@@ -25,9 +25,9 @@ use QDenka\QueryDoctor\Domain\QueryEvent;
  */
 final class GoldenTest extends TestCase
 {
-    private const string TRACES_DIR = __DIR__.'/../../Fixtures/traces';
+    private const TRACES_DIR = __DIR__.'/../../Fixtures/traces';
 
-    private const string EXPECTED_DIR = __DIR__.'/../../Fixtures/expected';
+    private const EXPECTED_DIR = __DIR__.'/../../Fixtures/expected';
 
     /**
      * @return array<string, array{string}>
