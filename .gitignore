@@ -17,6 +17,9 @@ Thumbs.db
 /build/
 *.phar
 
+# Dependencies
+composer.lock
+
 # Environment
 .env
 .env.local
