@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/QDenka/laravel-query-doctor/actions/workflows/ci.yml/badge.svg)](https://github.com/QDenka/laravel-query-doctor/actions)
 [![Latest Version](https://img.shields.io/packagist/v/qdenka/laravel-query-doctor.svg)](https://packagist.org/packages/qdenka/laravel-query-doctor)
-[![License](https://img.shields.io/packagist/l/qdenka/laravel-query-doctor.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/QDenka/laravel-query-doctor.svg)](LICENSE)
 
 Detect N+1 queries, missing indexes, and slow queries in your Laravel app before they reach production.
 
